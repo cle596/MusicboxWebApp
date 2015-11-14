@@ -36,19 +36,3 @@ function parse(data){
   }
   return data;
 }
-var voice = {};
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-  if (xhttp.readyState == 4 && xhttp.status == 200) {
-    voice.v1 = parse(xhttp.responseText);
-    ready.dispatchEvent(voiceready);
-  }
-}
-xhttp.open("GET", "music/v1.not", true);
-xhttp.send();
-
-var ready = document.getElementById("ready");
-var voiceready = new Event("voiceready");
-ready.addEventListener("voiceready",function(e){
-  console.log("voice ready");
-});

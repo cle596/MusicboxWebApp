@@ -19,8 +19,13 @@ var make_note = function(nobj){
   src.connect(comp);
   return src;
 }
-var ntime = {};
-ntime.v1 = 0;
+var ntime = {
+  v1:0,
+  v2:0,
+  v3:0,
+  v4:0,
+  v5:0
+};
 var schedule_note = function(src,t,no){
   if (t==0){
     ntime[no] = ctx.currentTime;
@@ -33,16 +38,20 @@ var schedule_note = function(src,t,no){
 var getntime = function(no){
   return ntime[no] + voice[no][0].duration;
 };
-var peek = function(ptime){
-  while (voice.v1.length && ntime.v1<ctx.currentTime+ptime){
-    schedule_note(make_note(voice.v1[0],"v1"),ntime.v1);
-    ntime.v1 = getntime("v1");
-    voice.v1.splice(0,1);
+var peek = function(ptime,no){
+  while (voice[no].length && ntime[no]<ctx.currentTime+ptime){
+    schedule_note(make_note(voice[no][0],no),ntime[no]);
+    ntime[no] = getntime(no);
+    voice[no].splice(0,1);
   }
 }
 var timer = new Worker('js/timer.js');
 timer.onmessage = function(e){
-  peek(1000);
+  peek(1000,"v1");
+  peek(1000,"v2");
+  peek(1000,"v3");
+  peek(1000,"v4");
+  peek(1000,"v5");
 }
 var start = document.getElementById("start");
 start.onclick = function(e){
