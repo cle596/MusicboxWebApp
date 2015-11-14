@@ -21,9 +21,9 @@ var make_note = function(nobj){
 }
 var ntime = {};
 ntime.v1 = 0;
-var schedule_note = function(src,t){
+var schedule_note = function(src,t,no){
   if (t==0){
-    ntime.v1 = ctx.currentTime;
+    ntime[no] = ctx.currentTime;
     src.start();
   }
   else{
@@ -35,7 +35,7 @@ var getntime = function(no){
 };
 var peek = function(ptime){
   while (voice.v1.length && ntime.v1<ctx.currentTime+ptime){
-    schedule_note(make_note(voice.v1[0]),ntime.v1);
+    schedule_note(make_note(voice.v1[0],"v1"),ntime.v1);
     ntime.v1 = getntime("v1");
     voice.v1.splice(0,1);
   }
