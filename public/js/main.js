@@ -10,9 +10,9 @@ gain.v2 = ctx.createGain();
 gain.v3 = ctx.createGain();
 gain.v4 = ctx.createGain();
 gain.v5 = ctx.createGain();
-gain.v1.gain.value = 1;
-gain.v2.gain.value = .1;
-gain.v3.gain.value = .1;
+gain.v1.gain.value = .8;
+gain.v2.gain.value = .05;
+gain.v3.gain.value = .05;
 gain.v4.gain.value = .2;
 gain.v5.gain.value = .2;
 gain.v1.connect(comp);
@@ -82,7 +82,7 @@ var peek = function(ptime,no){
   }
 }
 var playTimeSet = false;
-var ptime = 1;
+var ptime = .1;
 var timer = new Worker('js/timer.js');
 timer.onmessage = function(e){
   if (!playTimeSet){
