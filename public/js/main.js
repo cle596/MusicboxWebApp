@@ -4,15 +4,31 @@ var ctx = new AudioContext();
 var comp = ctx.createDynamicsCompressor();
 comp.threshold.value = -50;
 comp.connect(ctx.destination);
-
+var env = function(size){
+  var adsr = new Float32Array(size);
+  for (var x=0;x<Math.ceil(size/4);++x){
+    adsr[x] = 1/Math.ceil(size/4) * x;
+  }
+  for (var x=Math.ceil(size/4);x<Math.ceil(size/4*2);++x){
+    adsr[x] = -.3/Math.ceil(size/4) * x + 1.3;
+  }
+  for (var x=Math.ceil(size/4*2);x<Math.ceil(size/4*3);++x){
+    adsr[x] = .7;
+  }
+  for (var x=Math.ceil(size/4*3);x<size;++x){
+    adsr[x] = -.7/Math.ceil(size/4) * x + 2.8;
+  }
+  return adsr;
+}
 var make_note = function(nobj){
   var rate = 44100;
   var sample = rate * nobj.duration;
   var src = ctx.createBufferSource();
   var buf = ctx.createBuffer(1,sample,rate);
   var data = new Float32Array(sample);
+  var adsr = env(sample);
   data.forEach(function(y,x,data){
-    data[x] = Math.sin(2*Math.PI*nobj.pitch/rate*x);
+    data[x] = adsr[x]*Math.sin(2*Math.PI*nobj.pitch/rate*x);
   });
   buf.copyToChannel(data,0);
   src.buffer = buf;
@@ -28,7 +44,9 @@ var ntime = {
 };
 var schedule_note = function(src,t,no){
   if (t==0){
-    ntime[no] = ctx.currentTime;
+    for (var x in ntime){
+      ntime[x] = ctx.currentTime;
+    }
     src.start();
   }
   else{
