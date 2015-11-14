@@ -88,12 +88,15 @@ timer.onmessage = function(e){
   if (!playTimeSet){
     playTimeSet = true;
     playTime = ctx.currentTime+ptime;
+    for (var x in ntime){
+      ntime[x] = playTime;
+    }
   }
+  peek(ptime,"v4");
+  peek(ptime,"v5");
   peek(ptime,"v1");
   peek(ptime,"v2");
   peek(ptime,"v3");
-  peek(ptime,"v4");
-  peek(ptime,"v5");
 }
 var start = document.getElementById("start");
 start.onclick = function(e){
