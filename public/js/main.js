@@ -4,16 +4,7 @@ var ctx = new AudioContext();
 var comp = ctx.createDynamicsCompressor();
 comp.threshold.value = -50;
 comp.connect(ctx.destination);
-var voice = [
-  {pitch:440,duration:.5},
-  {pitch:493.88,duration:.5},
-  {pitch:554.37,duration:.5},
-  {pitch:587.33,duration:.5},
-  {pitch:659.25,duration:.5},
-  {pitch:739.99,duration:.5},
-  {pitch:830.61,duration:.5},
-  {pitch:880.00,duration:.5}
-];
+
 var make_note = function(nobj){
   var rate = 44100;
   var sample = rate * nobj.duration;
@@ -28,24 +19,31 @@ var make_note = function(nobj){
   src.connect(comp);
   return src;
 }
-var ntime = 0;
+var ntime = ctx.currentTime;
 var schedule_note = function(src,t){
-  src.start(t);
-}
-var getntime = function(){
-  return ntime + voice[0].duration;
-};
-var peek = function(ptime){
-  while (voice.length && ntime<ctx.currentTime+ptime){
-    schedule_note(make_note(voice[0]),ntime);
-    voice.splice(0,1);
-    if (voice.length){
-      ntime = getntime();
-    }
+  if (t==0){
+    ntime = ctx.currentTime;
+    src.start();
+  }
+  else{
+    src.start(t);
   }
 }
-var timer = new Worker('timer.js');
-timer.postMessage("");
+var getntime = function(){
+  return ntime + voice.v1[0].duration;
+};
+var peek = function(ptime){
+  while (voice.v1.length && ntime<ctx.currentTime+ptime){
+    schedule_note(make_note(voice.v1[0]),ntime);
+    ntime = getntime();
+    voice.v1.splice(0,1);
+  }
+}
+var timer = new Worker('js/timer.js');
 timer.onmessage = function(e){
   peek(1000);
+}
+var start = document.getElementById("start");
+start.onclick = function(e){
+  timer.postMessage("");
 }
