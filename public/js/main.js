@@ -19,23 +19,24 @@ var make_note = function(nobj){
   src.connect(comp);
   return src;
 }
-var ntime = ctx.currentTime;
+var ntime = {};
+ntime.v1 = 0;
 var schedule_note = function(src,t){
   if (t==0){
-    ntime = ctx.currentTime;
+    ntime.v1 = ctx.currentTime;
     src.start();
   }
   else{
     src.start(t);
   }
 }
-var getntime = function(){
-  return ntime + voice.v1[0].duration;
+var getntime = function(no){
+  return ntime[no] + voice[no][0].duration;
 };
 var peek = function(ptime){
-  while (voice.v1.length && ntime<ctx.currentTime+ptime){
-    schedule_note(make_note(voice.v1[0]),ntime);
-    ntime = getntime();
+  while (voice.v1.length && ntime.v1<ctx.currentTime+ptime){
+    schedule_note(make_note(voice.v1[0]),ntime.v1);
+    ntime.v1 = getntime("v1");
     voice.v1.splice(0,1);
   }
 }
