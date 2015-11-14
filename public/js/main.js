@@ -28,7 +28,7 @@ var make_note = function(nobj){
   var data = new Float32Array(sample);
   var adsr = env(sample);
   data.forEach(function(y,x,data){
-    data[x] = adsr[x]*Math.sin(2*Math.PI*nobj.pitch/rate*x);
+    data[x] = .2*adsr[x]*Math.sin(2*Math.PI*nobj.pitch/rate*x);
   });
   buf.copyToChannel(data,0);
   src.buffer = buf;
