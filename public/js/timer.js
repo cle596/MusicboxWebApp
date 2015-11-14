@@ -1,5 +1,5 @@
 onmessage = function(e){
   setInterval(function(){
-    postMessage("");  
+    postMessage("");
   },10);
 }
