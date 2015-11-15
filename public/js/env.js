@@ -17,17 +17,17 @@ var combine = function() {
 
 var voice_env = function(size){
   var adsr = new Float32Array(size);
-  for (var x=0;x<Math.ceil(size/8);++x){
-    adsr[x] = 1/Math.ceil(size/8) * x;
+  for (var x=0;x<Math.ceil(size/32);++x){
+    adsr[x] = 1/Math.ceil(size/32) * x;
   }
-  for (var x=Math.ceil(size/8);x<Math.ceil(size/4);++x){
-    adsr[x] = -.5/Math.ceil(size/4) * x + 1.5;
+  for (var x=Math.ceil(size/32);x<Math.ceil(size/16);++x){
+    adsr[x] = -.7/Math.ceil(size/32) * x + 1.7;
   }
-  for (var x=Math.ceil(size/4);x<Math.ceil(size/4*3);++x){
-    adsr[x] = .5;
+  for (var x=Math.ceil(size/16);x<Math.ceil(size/4*2);++x){
+    adsr[x] = .3;
   }
-  for (var x=Math.ceil(size/4*3);x<size;++x){
-    adsr[x] = -.5/Math.ceil(size/4) * x + 2;
+  for (var x=Math.ceil(size/4*2);x<size;++x){
+    adsr[x] = -.3/Math.ceil(size/4*2) * x + .6;
   }
   return adsr;
 }
