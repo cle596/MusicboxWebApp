@@ -11,8 +11,9 @@ html {
 .btn {
     font-family: 'Ubuntu', sans-serif;
     color: black;
-    background-color: #669999;
-    border: none;
+    background-color: #fff;
+    border: solid;
+    border-width: 1px;
     border-radius: 3px;
     padding: 10px;
 }
