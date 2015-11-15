@@ -42,3 +42,13 @@ var start = document.getElementById("start");
 start.onclick = function(e){
   timer.postMessage("");
 }
+
+var ios = document.getElementById("ios");
+ios.onclick = function(e){
+  var beep = make_note({
+    pitch: 220,
+    duration: .5
+  }"v2");
+  beep.connect(ctx.destination);
+  beep.start();
+};
