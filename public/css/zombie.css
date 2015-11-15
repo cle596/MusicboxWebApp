@@ -1,0 +1,18 @@
+html {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#header {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 200%;
+    margin-bottom: 20px;
+}
+
+.btn {
+    font-family: 'Ubuntu', sans-serif;
+    color: black;
+    background-color: #669999;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+}
