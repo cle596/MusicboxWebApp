@@ -4,7 +4,12 @@ var make_note = function(nobj,no){
   var src = ctx.createBufferSource();
   var buf = ctx.createBuffer(1,sample,rate);
   var data = new Float32Array(sample);
-  var adsr = env(sample);
+  if (no=="v1"){
+    var adsr = envelopes[0](sample);
+  }
+  else {
+    var adsr = envelopes[1](sample);
+  }
   data.forEach(function(y,x,data){
     data[x] = .2*adsr[x]*
       (
