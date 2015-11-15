@@ -48,7 +48,7 @@ ios.onclick = function(e){
   var beep = make_note({
     pitch: 220,
     duration: .5
-  }"v2");
+  },"v2");
   beep.connect(ctx.destination);
   beep.start();
 };
