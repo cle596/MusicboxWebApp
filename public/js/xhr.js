@@ -15,13 +15,12 @@ var xhr = function(no){
 xhr("v1");xhr("v2");xhr("v3");xhr("v4");xhr("v5");
 
 var start = document.getElementById("start");
-var ready = document.getElementById("ready");
 var readycnt = 0;
 var voiceready = new Event("voiceready");
 ready.addEventListener("voiceready",function(e){
   readycnt+=1;
   if (readycnt==5){
     start.disabled = false;
-    console.log("all voices ready");
+    ready.innerHTML += "voices ready <br>";
   }
 });

@@ -24,18 +24,15 @@ var soundSource, concertHallBuffer;
 ajaxRequest = new XMLHttpRequest();
 ajaxRequest.open('GET', 'impulse.wav', true);
 ajaxRequest.responseType = 'arraybuffer';
+var ready = document.getElementById("ready");
 ajaxRequest.onload = function() {
   var audioData = ajaxRequest.response;
   ctx.decodeAudioData(audioData, function(buffer) {
       concertHallBuffer = buffer;
-      /*
-      soundSource = ctx.createBufferSource();
-      soundSource.buffer = concertHallBuffer;
-      */
       convolver.buffer = concertHallBuffer;
       comp.connect(convolver);
       convolver.connect(ctx.destination);
-      console.log("convolver ready");
+      ready.innerHTML += "convolver ready <br>";
     }, function(e){"Error with decoding audio data" + e.err});
 }
 ajaxRequest.send();
