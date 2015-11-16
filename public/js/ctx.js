@@ -1,3 +1,4 @@
+window.AudioContext = window.AudioContext||window.webkitAudioContext;
 var ctx = new AudioContext();
 var comp = ctx.createDynamicsCompressor();
 comp.threshold.value = -50;
