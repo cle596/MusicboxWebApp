@@ -2,7 +2,6 @@ window.AudioContext = window.AudioContext||window.webkitAudioContext;
 var ctx = new AudioContext();
 var comp = ctx.createDynamicsCompressor();
 comp.threshold.value = -50;
-comp.connect(ctx.destination);
 var gain = {
   v1 : ctx.createGain(),
   v2 : ctx.createGain(),
@@ -20,3 +19,23 @@ gain.v2.connect(comp);
 gain.v3.connect(comp);
 gain.v4.connect(comp);
 gain.v5.connect(comp);
+var convolver = ctx.createConvolver();
+var soundSource, concertHallBuffer;
+ajaxRequest = new XMLHttpRequest();
+ajaxRequest.open('GET', 'impulse.wav', true);
+ajaxRequest.responseType = 'arraybuffer';
+ajaxRequest.onload = function() {
+  var audioData = ajaxRequest.response;
+  ctx.decodeAudioData(audioData, function(buffer) {
+      concertHallBuffer = buffer;
+      /*
+      soundSource = ctx.createBufferSource();
+      soundSource.buffer = concertHallBuffer;
+      */
+      convolver.buffer = concertHallBuffer;
+      comp.connect(convolver);
+      convolver.connect(ctx.destination);
+      console.log("convolver ready");
+    }, function(e){"Error with decoding audio data" + e.err});
+}
+ajaxRequest.send();
