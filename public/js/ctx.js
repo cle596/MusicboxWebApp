@@ -32,7 +32,7 @@ ajaxRequest.onload = function() {
       gain.v5.connect(convolver);
       convolver.connect(comp);
       comp.connect(ctx.destination);
-      ready.innerHTML += "convolver ready <br>";
+      ready.innerHTML += "convolver ready &#x2714;<br>";
     }, function(e){"Error with decoding audio data" + e.err});
 }
 ajaxRequest.send();

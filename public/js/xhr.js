@@ -21,6 +21,6 @@ ready.addEventListener("voiceready",function(e){
   readycnt+=1;
   if (readycnt==5){
     start.disabled = false;
-    ready.innerHTML += "voices ready <br>";
+    ready.innerHTML += "voices ready &#x2714;<br>";
   }
 });
