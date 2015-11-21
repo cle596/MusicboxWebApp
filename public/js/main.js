@@ -22,7 +22,7 @@ var peek = function(ptime,no){
   }
 }
 var playTimeSet = false;
-var ptime = 4;
+var ptime = .1;
 var timer = new Worker('js/timer.js');
 timer.onmessage = function(e){
   if (!playTimeSet){
